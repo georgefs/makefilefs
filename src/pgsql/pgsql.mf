@@ -10,7 +10,7 @@ PGPORT?=5432
 
 
 # docker only where path is volume in to pgsql 
-PG_DBPATH?=$(HOME)/.mf/pgsql#postgres database in local path
+PG_DBPATH?=$(HOME)/.mf/db/pgsql#postgres database in local path
 PgSQL_NAME?=pgsql#postgres container name
 
 
@@ -23,6 +23,11 @@ ifeq ($(PGHOST),$(DOCKER_IP))
     $(call start_deamon, $(PgSQL_NAME), $(PgImage), , -e POSTGRES_PASSWORD=$(PGPASSWORD) -e POSTGRES_USER=$(PGUSER) -p 5432 -v $(PG_DBPATH):/var/lib/postgresql/data )
     PGPORT=$(call docker_port, $(PgSQL_NAME), 5432)
 endif
+
+###
+#   check postgres port is open
+###
+$(shell $(call wait_port,$(PGHOST),$(PGPORT)))
 
 ####
 #
