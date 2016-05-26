@@ -1,0 +1,51 @@
+# pgsql service host & port
+REDIS_IMAGE?=redis
+
+# pgsql base configure
+REDIS_NAME=redis
+REDIS_HOST?=$(DOCKER_IP)
+REDIS_PORT?=6379
+
+####
+#
+#   initialize redis
+#
+####
+ifeq ($(REDIS_HOST),$(DOCKER_IP))
+    $(call start_deamon,$(REDIS_NAME),$(REDIS_IMAGE),, -p 6379)
+    REDIS_PORT=$(call docker_port, $(REDIS_NAME), 6379)
+endif
+
+$(shell $(call wait_port,$(REDIS_HOST),$(REDIS_PORT)))
+
+####
+#
+# setup redis env
+#
+####
+
+export REDIS_HOST
+export REDIS_PORT
+
+
+help::
+	@echo 
+	@echo 
+	@echo =============== redis plugin ===============
+	@echo -------------- env varable --------------
+	@echo REDIS_HOST                    - redis host address
+	@echo REDIS_PORT                    - redis host port
+	@echo -------------- CMD --------------
+	@echo redis_shell                  - run redis shell
+	@echo redis_bash                   - run /bin/bash on redis env
+
+
+redis_shell:IMAGE=$(REDIS_IMAGE)
+redis_shell:CMD=redis-cli -h $(REDIS_HOST) -p $(REDIS_PORT)
+redis_shell:
+	$(call run_cmd, $(IMAGE), $(CMD), $(DK_ARGS))
+
+redis_bash:IMAGE=$(REDIS_IMAGE)
+redis_bash:CMD=/bin/bash
+redis_bash:
+	$(call run_cmd, $(IMAGE), $(CMD), $(DK_ARGS))
