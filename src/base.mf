@@ -31,16 +31,6 @@ define wait_port
     while ! nc -z $(1) $(2); do sleep 0.1; done
 endef
 
-## wait docker container
-define wait_container
-    while [[ -z `docker ps -aq --filter=name=$(shell echo $(1))` ]]; do sleep 0.1; done
-endef 
-
-## wait docker port
-define wait_docker_port
-    $(call wait_port, $(DOCKER_IP), $(call docker_port, $(1), $(2)))
-endef 
-
 
 ## deamon
 define docker_deamon
