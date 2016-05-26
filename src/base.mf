@@ -20,8 +20,8 @@ docker_port=$(shell docker port $(1) $(2)| sed "s/.*://")
 free_port=$(shell for port in $$(seq 8000 65000); do echo -ne "\035" | telnet $(1) $$port > /dev/null ; [ $$? -eq 1 ]  && break; done;echo $$port)
 
 
-start_deamon=$(info $(shell $(call docker_deamon, $(1), $(2), $(3), $(4))))
-start_cmd=$(info $(shell $(call run_cmd, $(1), $(2), $(3))))
+start_deamon=$(info $(shell $(call docker_deamon,$(1),$(2),$(3),$(4))))
+start_cmd=$(info $(shell $(call run_cmd,$(1),$(2),$(3))))
 
 
 ## useful template
@@ -44,7 +44,7 @@ endef
 
 ## deamon
 define docker_deamon
-if [ -z "$$(docker ps -aq --filter=name=$(NAME))" ]; then \
+if [ -z "$$(docker ps -aq --filter=name=$(1))" ]; then \
 		docker run -d --name $(1) $(4) $(2) $(3) &>/dev/null; \
 	else \
 		docker top $(1) &> /dev/null  || docker restart $(1)  ; \
