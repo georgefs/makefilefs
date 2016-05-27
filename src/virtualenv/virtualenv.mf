@@ -10,7 +10,7 @@ VENV_REQUIREMENTS?=$(PWD)/requirements.txt
 
 $(shell touch $(VENV_REQUIREMENTS))
 
-ifeq ("$(wildcard $(PATH_TO_FILE))","")
+ifeq ("$(wildcard $(VENV_PATH))","")
     $(info $(shell virtualenv --no-site-package $(VENV_NAME)))
 endif
 
@@ -20,7 +20,7 @@ $(STATUS_PATH)/setup_env:$(VENV_REQUIREMENTS)
 	touch $(STATUS_PATH)/setup_env
 
 
-env::$(STATUS_PATH)/setup_env
+venv::$(STATUS_PATH)/setup_env
 	@cat $(INIT_SCRIPT_PATH)
 
 help::

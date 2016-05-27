@@ -50,6 +50,9 @@ $(call start_cmd,$(PgImage), createdb -E UTF8 -T template0 $(PGDATABASE) &>/dev/
 
 
 help::
+	@echo 
+	@echo 
+	@echo 
 	@echo =============== postgresql plugin ===============
 	@echo -------------- env varable --------------
 	@echo PGHOST                    - postgres host address
