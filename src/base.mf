@@ -28,7 +28,7 @@ start_cmd=$(info $(shell $(call run_cmd,$(1),$(2),$(3))))
 
 ## wait port
 define wait_port
-    while ! nc -z $(1) $(2); do sleep 0.1; done
+    while ! nc -z $(1) $(2) &>/dev/null; do sleep 0.1; done
 endef
 
 
@@ -52,7 +52,7 @@ endef
 
 ## run command
 define run_cmd
-	docker run -it --rm -v $$PWD:/work -w /work $(3) $(1) $(2)
+	docker run -it --rm -v $(PWD):/work -w /work $(3) $(1) $(2)
 endef
 
 
