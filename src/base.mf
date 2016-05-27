@@ -9,6 +9,10 @@ endif
 DOCKER_IP:=$(shell echo $(DOCKER_IP))
 
 
+STATUS_PATH=.make
+$(shell mkdir -p $(STATUS_PATH))
+
+
 ## get docker container port function
 # usega
 # 	port=$(call docker_port, "{% container name %}", "{% container port %}")
