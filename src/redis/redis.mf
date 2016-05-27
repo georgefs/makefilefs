@@ -2,7 +2,7 @@
 REDIS_IMAGE?=redis
 
 # pgsql base configure
-REDIS_NAME=redis
+REDIS_NAME?=redis
 REDIS_HOST?=$(DOCKER_IP)
 REDIS_PORT?=6379
 
@@ -49,3 +49,9 @@ redis_bash:IMAGE=$(REDIS_IMAGE)
 redis_bash:CMD=/bin/bash
 redis_bash:
 	$(call run_cmd, $(IMAGE), $(CMD), $(DK_ARGS))
+
+
+
+env::
+	@echo export REDIS_HOST=$(REDIS_HOST)
+	@echo export REDIS_PORT=$(REDIS_PORT)

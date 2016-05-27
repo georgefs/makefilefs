@@ -82,3 +82,10 @@ pg_bash:DK_ARGS=$(PGENV)
 pg_bash:CMD=/bin/bash
 pg_bash:
 	$(call run_cmd,$(IMAGE),$(CMD),$(DK_ARGS))
+
+env::
+	@echo export PGHOST=$(PGHOST)
+	@echo export PGUSER=$(PGUSER)
+	@echo export PGPASSWORD=$(PGPASSWORD)
+	@echo export PGDATABASE=$(PGDATABASE)
+	@echo export PGPORT=$(PGPORT)
