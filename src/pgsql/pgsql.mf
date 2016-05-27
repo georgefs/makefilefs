@@ -61,6 +61,7 @@ help::
 	@echo PGUSER                    - postgres user name
 	@echo PGPASSWORD                - postgres user password
 	@echo PG_DBPATH                 - postgres database volume path
+	@echo PG_NAME                    - postgres host address
 	@echo -------------- CMD --------------
 	@echo pg_shell                  - run postgres shell
 	@echo pg_bash                   - run /bin/bash on postgres env
