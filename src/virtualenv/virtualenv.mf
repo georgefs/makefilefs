@@ -10,15 +10,17 @@ VENV_REQUIREMENTS?=$(PWD)/requirements.txt
 
 $(shell touch $(VENV_REQUIREMENTS))
 
-$(VENV_PATH): 
-	virtualenv --no-site-package $(VENV_NAME)
+ifeq ("$(wildcard $(PATH_TO_FILE))","")
+    $(info $(shell virtualenv --no-site-package $(VENV_NAME)))
+endif
 
-$(VENV_REQUIREMENTS): $(VENV_PATH)
-	source $(INIT_SCRIPT_PATH) && \
-	pip install -r $(VENV_REQUIREMENTS)
+$(STATUS_PATH)/setup_env:$(VENV_REQUIREMENTS)
+	@source $(INIT_SCRIPT_PATH) &>/dev/null && \
+	pip install -r $(VENV_REQUIREMENTS) &>/dev/null && \
+	touch $(STATUS_PATH)/setup_env
 
 
-env::$(VENV_REQUIREMENTS)
+env::$(STATUS_PATH)/setup_env
 	@cat $(INIT_SCRIPT_PATH)
 
 help::
