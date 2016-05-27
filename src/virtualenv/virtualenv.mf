@@ -23,7 +23,7 @@ $(STATUS_PATH)/setup_env:$(VENV_REQUIREMENTS)
 venv::$(STATUS_PATH)/setup_env
 	@cat $(INIT_SCRIPT_PATH)
 
-help::
+help::$(STATUS_PATH)/setup_env
 	@echo =============== postgresql plugin ===============
 	@echo -------------- env varable --------------
 	@echo VENV_NAME					- virtualenv name default venv

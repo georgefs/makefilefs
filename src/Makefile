@@ -1,18 +1,27 @@
 PLUGINS_HOME=$(HOME)/.mf/plugins/
 INC=$(PLUGINS_HOME)
 
-plugin_path=$(PLUGINS_HOME)$(1)
 MFDB=https://raw.githubusercontent.com/georgefs/makefilefs/master/src/
 
-## plugin downloader
+help::
+	@echo main help
+
 %.mf:
 	@echo download plugin $@
-	@mkdir -p `dirname $(call plugin_path,$@)` && \
-	@curl $(MFDB)$@ > $(call plugin_path,$@)
-	
+	mkdir -p `dirname /usr/local/include/$@` && \
+	curl $(MFDB)$@ > /usr/local/include/$@
+
+clean_plugin:
+	rm `find /usr/local/include/**/*.mf` `find /usr/local/include/*.mf`
 
 
 ## include all plugin if need
-include base.mf pgsql/pgsql.mf
+include base.mf pgsql/pgsql.mf redis/redis.mf virtualenv/virtualenv.mf
 
-## setup custom variable in this
+DATABASE_URL=postgres://$(PGUSER):$(PGPASSWORD)@$(PGHOST):$(PGPORT)
+REDIS_URL=redis://$(REDIS_HOST):$(REDIS_PORT)
+
+env::
+	@echo DATABASE_URL=$(DATABASE_URL)
+	@echo REDIS_URL=$(REDIS_URL)
+	@echo DJANGO_SETTINGS_MODULE=op.settings.local
