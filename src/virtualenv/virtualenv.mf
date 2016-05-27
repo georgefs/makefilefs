@@ -1,0 +1,29 @@
+# pgsql service host & port
+REDIS_IMAGE?=redis
+
+# pgsql base configure
+VENV_NAME?=venv
+VENV_PATH=$(PWD)/$(VENV_NAME)
+
+INIT_SCRIPT_PATH=$(VENV_PATH)/bin/activate
+VENV_REQUIREMENTS?=$(PWD)/requirements.txt
+
+$(shell touch $(VENV_REQUIREMENTS))
+
+$(VENV_PATH): 
+	virtualenv --no-site-package $(VENV_NAME)
+
+$(VENV_REQUIREMENTS): $(VENV_PATH)
+	source $(INIT_SCRIPT_PATH) && \
+	pip install -r $(VENV_REQUIREMENTS)
+
+
+env::$(VENV_REQUIREMENTS)
+	@cat $(INIT_SCRIPT_PATH)
+
+help::
+	@echo =============== postgresql plugin ===============
+	@echo -------------- env varable --------------
+	@echo VENV_NAME					- virtualenv name default venv
+	@echo VENV_REQUIREMENTS			- custom virtualenv requirement.txt path default $(PWD)/requirements.txt
+
