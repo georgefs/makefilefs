@@ -1,5 +1,5 @@
 # pgsql service host & port
-PgImage:=postgres
+PG_IMAGEe:=postgres
 
 # pgsql base configure
 PGHOST?=$(DOCKER_IP)
@@ -11,7 +11,7 @@ PGPORT?=5432
 
 # docker only where path is volume in to pgsql 
 PG_DBPATH?=$(HOME)/.mf/db/pgsql#postgres database in local path
-PgSQL_NAME?=pgsql#postgres container name
+PG_NAME?=pgsql#postgres container name
 
 
 ####
@@ -20,8 +20,8 @@ PgSQL_NAME?=pgsql#postgres container name
 #
 ####
 ifeq ($(PGHOST),$(DOCKER_IP))
-    $(call start_deamon,$(PgSQL_NAME),$(PgImage),, -e POSTGRES_PASSWORD=$(PGPASSWORD) -e POSTGRES_USER=$(PGUSER) -p 5432 -v $(PG_DBPATH):/var/lib/postgresql/data )
-    PGPORT=$(call docker_port,$(PgSQL_NAME),5432)
+    $(call start_deamon,$(PG_NAME),$(PG_IMAGEe),, -e POSTGRES_PASSWORD=$(PGPASSWORD) -e POSTGRES_USER=$(PGUSER) -p 5432 -v $(PG_DBPATH):/var/lib/postgresql/data )
+    PGPORT=$(call docker_port,$(PG_NAME),5432)
 endif
 
 ###
@@ -46,7 +46,7 @@ PGENV=-e PGHOST=$(PGHOST) -e PGUSER=$(PGUSER) -e PGPORT=$(PGPORT) -e PGPASSWORD=
 ###
 #   create postgresql database
 ###
-$(call start_cmd,$(PgImage), createdb -E UTF8 -T template0 $(PGDATABASE) &>/dev/null,$(PGENV))
+$(call start_cmd,$(PG_IMAGEe), createdb -E UTF8 -T template0 $(PGDATABASE) &>/dev/null,$(PGENV))
 
 
 help::
@@ -67,20 +67,20 @@ help::
 	@echo pg_dropdb                 - remove database $(PGDATABASE)  or PGDATABASE 
 
 
-pg_shell:IMAGE=$(PgImage)
+pg_shell:IMAGE=$(PG_IMAGEe)
 pg_shell:DK_ARGS=$(PGENV)
 pg_shell:CMD=psql -d $(PGDATABASE) 
 pg_shell:
 	$(call run_cmd,$(IMAGE),$(CMD),$(DK_ARGS))
 
 # pg_dropdb 
-pg_dropdb:IMAGE=$(PgImage)
+pg_dropdb:IMAGE=$(PG_IMAGEe)
 pg_dropdb:DK_ARGS=$(PGENV)
 pg_dropdb:CMD=dropdb $(PGDATABASE)
 pg_dropdb:
 	$(call run_cmd,$(IMAGE),$(CMD),$(DK_ARGS))
 
-pg_bash:IMAGE=$(PgImage)
+pg_bash:IMAGE=$(PG_IMAGEe)
 pg_bash:DK_ARGS=$(PGENV)
 pg_bash:CMD=/bin/bash
 pg_bash:
