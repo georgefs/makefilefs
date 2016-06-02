@@ -20,12 +20,15 @@ $(STATUS_PATH)/setup_env:$(VENV_REQUIREMENTS)
 	touch $(STATUS_PATH)/setup_env
 
 
-venv::$(STATUS_PATH)/setup_env
-	@cat $(INIT_SCRIPT_PATH)
-
 help::$(STATUS_PATH)/setup_env
+	@echo
+	@echo
 	@echo =============== postgresql plugin ===============
 	@echo -------------- env varable --------------
 	@echo VENV_NAME					- virtualenv name default venv
 	@echo VENV_REQUIREMENTS			- custom virtualenv requirement.txt path default $(PWD)/requirements.txt
+	@echo -------------- CMD --------------
+	@echo vshell                - use virtualenv env shell
 
+vshell:
+	@bash --rcfile $(INIT_SCRIPT_PATH)
