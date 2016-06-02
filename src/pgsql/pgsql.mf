@@ -88,8 +88,8 @@ pg_bash:
 	$(call run_cmd,$(IMAGE),$(CMD),$(DK_ARGS))
 
 env::
-	@echo export PGHOST=$(PGHOST)
-	@echo export PGUSER=$(PGUSER)
-	@echo export PGPASSWORD=$(PGPASSWORD)
-	@echo export PGDATABASE=$(PGDATABASE)
-	@echo export PGPORT=$(PGPORT)
+	@echo PGHOST=$(PGHOST)
+	@echo PGUSER=$(PGUSER)
+	@echo PGPASSWORD=$(PGPASSWORD)
+	@echo PGDATABASE=$(PGDATABASE)
+	@echo PGPORT=$(PGPORT)

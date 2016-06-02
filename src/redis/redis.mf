@@ -53,5 +53,5 @@ redis_bash:
 
 
 env::
-	@echo export REDIS_HOST=$(REDIS_HOST)
-	@echo export REDIS_PORT=$(REDIS_PORT)
+	@echo REDIS_HOST=$(REDIS_HOST)
+	@echo REDIS_PORT=$(REDIS_PORT)
