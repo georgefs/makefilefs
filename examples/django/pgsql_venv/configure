@@ -1,0 +1,20 @@
+PLUGINS=pgsql/pgsql.mf virtualenv/virtualenv.mf django/django.mf
+
+## postgres config
+# postgres container name
+PG_NAME=test1
+# postgres database name
+PGDATABASE=test
+# pg db file path
+PG_DBPATH=$(PWD)/db
+
+## django config
+# django database url for django environ
+DATABASE_URL=postgres://$(PGUSER):$(PGPASSWORD)@$(PGHOST):$(PGPORT)/$(PGDATABASE)
+# django setting 
+DJANGO_SETTINGS_MODULE=conf.settings
+
+
+## virtualenv 
+VENV_REQUIREMENTS=requirements.txt
+PYTHONPATH=src

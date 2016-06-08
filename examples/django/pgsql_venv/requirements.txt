@@ -1,0 +1,14 @@
+# A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
+# https://pypi.python.org/pypi/Django/1.9.1
+Django==1.9.5
+
+# Django-environ allows you to utilize 12factor inspired environment variables
+# to configure your Django application.
+# http://django-environ.readthedocs.org
+django-environ==0.4.0
+
+# psycopg2 - Python-PostgreSQL Database Adapter
+# https://pypi.python.org/pypi/psycopg2/2.6
+psycopg2==2.6
+
+
