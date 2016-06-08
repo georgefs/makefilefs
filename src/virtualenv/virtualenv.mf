@@ -23,7 +23,7 @@ $(STATUS_PATH)/setup_env:$(VENV_REQUIREMENTS)
 help::$(STATUS_PATH)/setup_env
 	@echo
 	@echo
-	@echo =============== postgresql plugin ===============
+	@echo =============== virtualenv plugin ===============
 	@echo -------------- env varable --------------
 	@echo VENV_NAME					- virtualenv name default venv
 	@echo VENV_REQUIREMENTS			- custom virtualenv requirement.txt path default $(PWD)/requirements.txt
@@ -31,4 +31,5 @@ help::$(STATUS_PATH)/setup_env
 	@echo vshell                - use virtualenv env shell
 
 vshell:
-	@bash --rcfile $(INIT_SCRIPT_PATH)
+	@export PS1=bash\$ && \
+	env bash --rcfile $(INIT_SCRIPT_PATH)

@@ -1,16 +1,29 @@
 DJANGO_SHELL?=$(shell find **/manage.py) 
 DJANGO_SETTINGS?=src.settings
-DJANGO_BIN=$(ENV) django-admin --settings=$(DJANGO_SETTINGS) 
+DJANGO_BIN=$(ENV) django-admin 
+export DATABASE_URL
+export DJANGO_SETTINGS_MODULE
+export PYTHONPATH
 
 djserver: djmigrate
-    $(DJANGO_BIN) runserver
+	@$(DJANGO_BIN) runserver
 
 djshell: djmigrate
-    $(DJANGO_BIN) shell
+	@$(DJANGO_BIN) shell
 
 djmigrate:
-    if [ -z "$$($(DJANGO_BIN) migrate -l|grep '[ ]')" ]; then\
+	@if ! [ -z "$$($(DJANGO_BIN) showmigrations|grep '\[ \]')" ]; then \
+		$(DJANGO_BIN) migrate; \
+	fi
 
-    else \
-        $(DJANGO_BIN) migrate
-    fi
+
+help::$(STATUS_PATH)/setup_env
+	@echo
+	@echo
+	@echo =============== django plugin ===============
+	@echo -------------- env varable --------------
+	@echo DJANGO_SETTINGS_MODULE					- django setting module
+	@echo DATABASE_URL 			                    - django env database url
+	@echo -------------- CMD --------------
+	@echo djshell                - use django shell
+	@echo djserver               - run django server
